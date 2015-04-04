@@ -8,7 +8,22 @@
  */
 class FeedItemDTO {
 
-    public static function create()
+    /**
+     * Creates a new Feed Item.
+     * @param array $attributes
+     * @return Feed
+     */
+    public static function create(Array $attributes)
+    {
+
+    }
+
+    /**
+     * Gets the value of a Feed Item attribute.
+     * @param $name
+     * @return mixed
+     */
+    public function getAttribute($name)
     {
 
     }

@@ -1,14 +1,19 @@
-<?php
+<?php namespace App\Contracts;
+
 /**
- * Created by PhpStorm.
- * User: marcust
- * Date: 03/04/15
- * Time: 15:07
+ * Handles requests to interact with the applications RSS feeds.
+ * @package App\Http\Controllers
+ * @author Marcus T <marcust261@icloud.com>
+ * @since 03.04.15
  */
-
-namespace App\Contracts;
-
-
 interface ViewComposerContract {
+
+    /**
+     * Renders a view.
+     * @param string $template
+     * @param array $attributes
+     * @return string
+     */
+    public function make($template, Array $attributes = []);
 
 }

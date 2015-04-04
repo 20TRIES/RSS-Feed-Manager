@@ -1,0 +1,27 @@
+{
+    "name": "20tries/rss-feed-manager",
+
+    "description": "Simple web application for managing rss feeds.",
+
+    "authors": [
+        {
+            "name": "Marcus",
+            "email": "marcust261@icloud.com"
+        }
+    ],
+
+    "require": {
+        "bramus/router": "~1.0",
+        "twig/twig"    : "~1.0"
+    },
+
+    "require-dev": {
+
+    },
+
+    "autoload": {
+        "psr-0": {
+          "App": ""
+        }
+    }
+}
