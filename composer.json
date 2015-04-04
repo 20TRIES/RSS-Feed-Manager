@@ -12,7 +12,8 @@
 
     "require": {
         "bramus/router": "~1.0",
-        "twig/twig"    : "~1.0"
+        "twig/twig"    : "~1.0",
+        "nesbot/carbon": "~1.14"
     },
 
     "require-dev": {

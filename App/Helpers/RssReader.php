@@ -1,5 +1,8 @@
 <?php namespace App\Helpers;
 
+use App\Models\FeedItems\FeedItem;
+use App\Models\Feeds\Feed;
+
 /**
  * A helper class for reading rss feeds.
  * @package App\Helpers
@@ -10,22 +13,25 @@ class RssReader {
 
     /**
      * Gets an array of all of the items within an rss feed.
-     * @param Feed $feed
-     * @return FeedItemDTO[]
+     * @param \App\Models\Feeds\Feed $feed
+     * @return FeedItem[]
      */
     public static function fetch(Feed $feed)
     {
-        $feed = (new \DOMDocument())->load($feed->address);
+        $dom = (new \DOMDocument());
+        $dom->load($feed->getAttribute('address'));
         $items = [];
-        foreach ($feed->getElementsByTagName('item') as $node)
+        foreach ($dom->getElementsByTagName('item') as $node)
         {
-            $items[] = FeedItemDTO::create([
-                'feed'  => $feed->getAttribute('id'),
-                'title' => $node->getElementsByTagName('title')->item(0)->nodeValue,
-                'desc'  => $node->getElementsByTagName('description')->item(0)->nodeValue,
-                'link'  => $node->getElementsByTagName('link')->item(0)->nodeValue,
-                'date'  => $node->getElementsByTagName('date')->item(0)->nodeValue
+            $item =  new FeedItem();
+            $item->fill([
+                'feed'       => $feed->getAttribute('id'),
+                'title'      => $node->getElementsByTagName('title')->item(0)->nodeValue,
+                'desc'       => $node->getElementsByTagName('description')->item(0)->nodeValue,
+                'address'    => $node->getElementsByTagName('link')->item(0)->nodeValue,
+                'created_at' => $node->getElementsByTagName('date')->item(0)->nodeValue
             ]);
+            $items[] = $item;
         }
         return $items;
     }

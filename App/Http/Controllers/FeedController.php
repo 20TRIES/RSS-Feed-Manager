@@ -2,7 +2,7 @@
 
 use App\Helpers\Redirect;
 use App\Helpers\RssReader;
-use App\Models\Feed;
+use App\Models\Feeds\Feed;
 
 /**
  * Handles requests to interact with the applications RSS feeds.
@@ -18,8 +18,23 @@ class FeedController extends BaseController {
     public function index()
     {
         return $this->view_composer->make('feeds/index.twig', [
-            'title' => 'My Feeds',
-            'feeds' => Feed::all()
+            'title'        => 'All Feeds',
+            'link_to_show' => 'http://' . $_SERVER['HTTP_HOST'] . '/show/',
+            'items'        => (new Feed())->all()
+        ]);
+    }
+
+    /**
+     * Handles a request to show a RSS Feed.
+     * @param $feed_id
+     * @return string
+     */
+    public function show($feed_id)
+    {
+        $feed = ( new Feed() )->find($feed_id);
+        return $this->view_composer->make('feeds/show.twig', [
+            'title'   => $feed->getAttribute('name'),
+            'items'   => RssReader::fetch($feed)
         ]);
     }
 
@@ -45,19 +60,6 @@ class FeedController extends BaseController {
 
         $feed = Feed::create($input);
         Redirect::to('/show', $feed->getAttribute('id'));
-    }
-
-    /**
-     * Handles a request to show a RSS Feed.
-     * @param $feed_id
-     * @return string
-     */
-    public function show($feed_id)
-    {
-        return $this->view_composer->make('feeds/show.twig', [
-            'title' => 'Add Feed',
-            'feed'  => RssReader::fetch( Feed::find($feed_id) )
-        ]);
     }
 
     /**
