@@ -1,11 +1,8 @@
 <?php namespace App\Http\Controllers;
 
-use App\Helpers\QueryHandlers\PDOQueryHandler;
-use App\Helpers\Queries\MysqlQuery;
 use App\Helpers\Redirect;
 use App\Helpers\RssReader;
 use App\Models\Feeds\Feed;
-use Carbon\Carbon;
 
 /**
  * Handles requests to interact with the applications RSS feeds.
