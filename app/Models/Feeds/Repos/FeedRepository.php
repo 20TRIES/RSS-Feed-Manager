@@ -3,6 +3,7 @@
 use App\Contracts\ModelContract AS Model;
 use App\Models\Feeds\Feed;
 use App\Contracts\RepositoryContract;
+use App\Contracts\Queries\QueryHandlerContract AS QueryHandler;
 
 /**
  * A repository for interacting with Feeds/
@@ -15,15 +16,22 @@ abstract class FeedRepository implements RepositoryContract {
     /**
      * @var Model
      */
-    private $model;
+    protected $model;
+
+    /**
+     * @var QueryHandler
+     */
+    protected $handler;
 
     /**
      * Constructor
      * @param Model $model
+     * @param QueryHandler $handler
      */
-    public function __construct(Model $model)
+    public function __construct(Model $model, QueryHandler $handler = NULL)
     {
-        $this->model = $model;
+        $this->model   = $model;
+        $this->handler = $handler;
     }
 
     /**
@@ -43,21 +51,17 @@ abstract class FeedRepository implements RepositoryContract {
     public abstract function find($id);
 
     /**
-     * Inserts the repository model into the database.
-     * @return Feed
+     * Saves teh model and updates any of teh model's attribute that a
+     * are automatically set during this process, e.g. updated_at.
+     * @return bool
      */
-    public abstract function insert();
+    public abstract function save();
 
     /**
      * Deletes a Feed.
      * @param $id
      */
     public abstract function delete($id);
-
-    /**
-     * Creates a new query.
-     */
-    public abstract function newQuery();
 
     /**
      * Creates a model from a set of data that has the same class

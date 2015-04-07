@@ -49,14 +49,17 @@ trait FeedRepositoryTrait {
 
     public function save()
     {
-        return $this->exists()
-            ? $this->getRepository('feeds')->update()
-            : $this->getRepository('feeds')->insert();
+        return $this->getRepository('feeds')->save();
     }
 
     public function exists()
     {
         return $this->getRepository('feeds')->exists();
+    }
+
+    public function unique()
+    {
+        return $this->getRepository('feeds')->unique();
     }
 
     /**

@@ -12,6 +12,21 @@ use App\Contracts\Queries\QueryHandlerContract AS Handler;
 interface QueryContract  {
 
     /**
+     * A query type used for queries that select data.
+     */
+    const SELECT = 'select';
+
+    /**
+     * A query type used for queries that insert data.
+     */
+    const INSERT = 'insert';
+
+    /**
+     * A query type used for queries that update data.
+     */
+    const UPDATE = 'update';
+
+    /**
      * Constructor
      * @param Handler $handler
      */
@@ -58,6 +73,12 @@ interface QueryContract  {
     public function getBindings();
 
     /**
+     * Gets the type of the query.
+     * @return string
+     */
+    public function getType();
+
+    /**
      * Sets the table for the query.
      * @param string $name The table name.
      * @return $this
@@ -66,8 +87,8 @@ interface QueryContract  {
 
     /**
      * Adds a where condition to the query.
-     * @param $column The column that the condition applies to.
-     * @param $operator the operator that is used.
+     * @param string $column The column that the condition applies to.
+     * @param string $operator the operator that is used.
      * @param string $type The type of condition that should be used
      * to join the condition to any previous conditions. If not
      * previous conditions exist, this value will be ignored and

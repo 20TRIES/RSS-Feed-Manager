@@ -34,9 +34,12 @@ abstract class QueryHandlerContract {
     /**
      * Executes a query.
      * @param QueryContract $query
-     * @return FALSE|array If the query fails, FALSE will be returned.
+     * @return mixed If the query fails, FALSE will be returned.
      *  When testing for equality '===' should be used. If the query
-     *  is successful the results will be returned in an array.
+     *  is successful the results will be returned depending upon
+     *  the type of query. If the query inserts data, the last inserted
+     *  id will be returned, otherwise an array of results will be
+     *  returned.
      */
     public abstract function execute(Query $query);
 

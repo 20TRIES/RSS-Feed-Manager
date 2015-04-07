@@ -1,9 +1,8 @@
 <?php namespace App\Models\Feeds\Repos;
 
 use App\Contracts\ModelContract AS Model;
-use App\Helpers\QueryHandlers\PDOQueryHandler AS Builder;
-use Carbon\Carbon;
-use PDO;
+use App\Contracts\Queries\QueryHandlerContract AS QueryHandler;
+use App\Helpers\QueryHandlers\PDOQueryHandler;
 
 /**
  *  A repository for interacting with Feeds; implemented using the PDO library.
@@ -13,56 +12,41 @@ use PDO;
  */
 class PDOFeedRepository extends FeedRepository {
 
-    public function __construct(Model $model)
+    public function __construct(Model $model, QueryHandler $handler = NULL)
     {
-        parent::__construct($model);
+        $handler = is_null($handler) ? new PDOQueryHandler() : $handler;
+        parent::__construct($model, $handler);
     }
 
-    public function newQuery()
-    {
-        return new PDOQueryBuilder($this->model());
-    }
-
-    /**
-     * @param $id
-     * @return \App\Contracts\ModelContract[]
-     * @TODO Move to a more more appropriate parent class.
-     */
     public function find($id)
     {
-        $query = $this->newQuery()->where('id', '=', $id);
-        return $this->createModels($query->get());
+        $results = $this->handler
+            ->select(['*'])
+            ->table('feeds')
+            ->where('id', '=', $id)
+            ->execute();
+        return $this->createModels($results);
     }
 
-    /**
-     * @return \App\Contracts\ModelContract[]
-     * @TODO Move to a more more appropriate parent class.
-     */
     public function all()
     {
-        $query = $this->newQuery();
-        return $this->createModels($query->get());
+        $results = $this->handler
+            ->select(['*'])
+            ->table('feeds')
+            ->execute();
+        return $this->createModels($results);
     }
 
     public function exists()
     {
-        $query = $this->newQuery();
-        $model_id =  $this->model()->getAttribute('id');
-        if ( ! is_null($model_id))
-        {
-            $query->where('id', '=', $model_id);
-        }
-        $query->orWhere('name', '=', $this->model()->getAttribute('name'));
-        $query->orWhere('address', '=', $this->model()->getAttribute('address'));
-        return ! empty($query->get());
-    }
-
-    public function existsOrFail()
-    {
-        if ( ! $this->exists())
-        {
-            throw new Exception('Model does not exist in database.');
-        }
+        $results = $this->handler
+            ->select(['*'])
+            ->table('feeds')
+            ->where('id', '=', $this->model()->getAttribute('id'))
+            ->where('name', '=', $this->model()->getAttribute('name'))
+            ->orWhere('address', '=', $this->model()->getAttribute('address'))
+            ->execute();
+        return !empty($results);
     }
 
     public function unique()
@@ -70,37 +54,35 @@ class PDOFeedRepository extends FeedRepository {
         return ! $this->exists();
     }
 
-    public function uniqueOrFail()
+    public function save()
     {
-        if ($this->exists())
-        {
-            throw new Exception('Model is not unique');
-        }
+        return $this->unique() ? $this->insertModel() : $this->updateModel();
     }
 
-    public function insert()
+    /**
+     * @throws \Exception
+     * @TODO: Implement method
+     */
+    protected function updateModel()
     {
-        $result = $this->newQuery()
-            ->table($this->model()->table())
-            ->insert($this->model()->getAttributes());
-
-        // Fill the repository model with the newly inserted data.
-        // This must be done as some attribute may be left as NULL
-        // and hence generated at the time of insertion.
-        $new_data = $this->newQuery()
-            ->where('id', '=', $result)
-            ->get();
-        $this->model()->fill( array_pop($new_data) );
+        throw new \Exception('The update method still needs implementing.');
     }
 
-    public function update()
+    protected function insertModel()
     {
-        $this->model()->setAttribute('updated_at', Carbon::now('GB'));
-        return $this->newQuery()
+        $result = $this->handler
+            ->insert($this->model()->getAttributes())
             ->table($this->model()->table())
-            ->update($this->model()->getAttributes())
-            ->where('id', '=', $this->model()->getAttribute('id'))
-            ->executeUpdate();
+            ->execute();
+        if ($result === FALSE) return FALSE;
+
+        // Fill the current model with the data from the newly inserted record.
+        // Some fields are automatically set when inserted and as such need
+        // to be transferred to the current model instance.
+        $find_results = $this->model()->find($result);
+        $new_attributes = array_pop($find_results)->getAttributes();
+        $this->model()->fill($new_attributes);
+        return TRUE;
     }
 
     public function delete($id)

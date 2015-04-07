@@ -20,40 +20,12 @@ class FeedController extends BaseController {
      */
     public function index()
     {
-        var_dump('You Have Arrived');
-//
-//        $query = new MysqlQuery();
-//
-//        $query->table('feeds')
-//            ->update(['name' => 'BBC News'])
-//            ->where('id', '=', 1)
-//            ->andWhere('name', '=', 'PHP.net')
-//            ->orWhere('id', '=', 3);
-//
-//        var_dump($query->getStatement());
-//        var_dump($query->getBindings());
-//
-//        var_dump('############################');
-
-        $builder = new PDOQueryHandler();
-
-        $query = $builder->update(['name' => 'PHP.net'])
-            ->table('feeds')
-            ->where('id', '=', 1)
-            ->andWhere('name', '=', 'BBC News');
-
-        var_dump($query->getStatement());
-        var_dump($query->getBindings());
-
-        $query->execute();
-
-
-//        return $this->view_composer->make('feeds/index.twig', [
-//            'title'        => 'All Feeds',
-//            'link_to_add'  => 'http://' . $_SERVER['HTTP_HOST'] . '/add',
-//            'link_to_show' => 'http://' . $_SERVER['HTTP_HOST'] . '/show/',
-//            'items'        => (new Feed())->all()
-//        ]);
+        return $this->view_composer->make('feeds/index.twig', [
+            'title'        => 'All Feeds',
+            'link_to_add'  => 'http://' . $_SERVER['HTTP_HOST'] . '/add',
+            'link_to_show' => 'http://' . $_SERVER['HTTP_HOST'] . '/show/',
+            'items'        => (new Feed())->all()
+        ]);
     }
 
     /**
@@ -99,11 +71,11 @@ class FeedController extends BaseController {
      * Handles a request to destroy a RSS Feed.
      * @return string
      * @param $feed_id
+     * @TODO Needs implementing.
      */
     public function destroy($feed_id)
     {
-        Feed::delete($feed_id);
-        return Redirect::to('');
+
     }
 
 }

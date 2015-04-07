@@ -52,7 +52,14 @@ class PDOQueryHandler extends QueryHandlerContract {
             $result = $statement->bindValue($index, $value);
             if ($result === FALSE) throw new Exception("Failed when binding parameter $index => $value");
         }
-        return $statement->execute() === FALSE ? FALSE : $statement->fetchAll();
+        if ($statement->execute() === FALSE) return FALSE;
+        switch ($query->getType())
+        {
+            case Query::INSERT:
+                return $this->connection->lastInsertId();
+            default:
+                return $statement->fetchAll();
+        }
     }
 
     /**

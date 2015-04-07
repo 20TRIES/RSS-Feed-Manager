@@ -13,21 +13,6 @@ use App\Contracts\Queries\QueryContract;
 class MysqlQuery implements QueryContract {
 
     /**
-     * A query type used for queries that select data.
-     */
-    const SELECT = 'select';
-
-    /**
-     * A query type used for queries that insert data.
-     */
-    const INSERT = 'insert';
-
-    /**
-     * A query type used for queries that update data.
-     */
-    const UPDATE = 'update';
-
-    /**
      * @var string The table that the query will be executed on.
      */
     private $table;
@@ -69,7 +54,7 @@ class MysqlQuery implements QueryContract {
 
     public function execute()
     {
-        $this->handler->execute($this);
+        return $this->handler->execute($this);
     }
 
     public function select(array $columns)
@@ -209,6 +194,11 @@ class MysqlQuery implements QueryContract {
         return ! empty($this->query_type);
     }
 
+    public function getType()
+    {
+        return $this->query_type;
+    }
+
     /**
      * Generates a select statement query string.
      * @return string
@@ -311,7 +301,7 @@ class MysqlQuery implements QueryContract {
      */
     protected function countBindings()
     {
-        return count($this->condition_bindings);
+        return count($this->operator_bindings) + count($this->condition_bindings);
     }
 
     /**
