@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+</head>
+    <body>
+        <h1>{{ title }}</h1>
+        <form method="POST" action="{{ submit_address }}" accept-charset="UTF-8">
+            Name
+            <div>
+                <input id="name" name="name" value="{{ feed.name }}" type="text">
+            </div>
+            Address
+            <div>
+                <input id="address" name="address" value="{{ feed.address }}" type="text">
+            </div>
+            <input type="submit" value="Submit">
+        </form>
+
+    </body>
+</html>

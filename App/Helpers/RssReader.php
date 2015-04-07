@@ -25,11 +25,11 @@ class RssReader {
         {
             $item =  new FeedItem();
             $item->fill([
-                'feed'       => $feed->getAttribute('id'),
-                'title'      => $node->getElementsByTagName('title')->item(0)->nodeValue,
-                'desc'       => $node->getElementsByTagName('description')->item(0)->nodeValue,
-                'address'    => $node->getElementsByTagName('link')->item(0)->nodeValue,
-                'created_at' => $node->getElementsByTagName('date')->item(0)->nodeValue
+                'feed'       => @ $feed->getAttribute('id'),
+                'title'      => @ $node->getElementsByTagName('title')->item(0)->nodeValue,
+                'desc'       => @ $node->getElementsByTagName('description')->item(0)->nodeValue,
+                'address'    => @ $node->getElementsByTagName('link')->item(0)->nodeValue,
+                'created_at' => @ $node->getElementsByTagName('date')->item(0)->nodeValue
             ]);
             $items[] = $item;
         }

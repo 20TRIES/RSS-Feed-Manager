@@ -23,9 +23,8 @@ class BaseModel {
      */
     protected $cast       = [];
 
-    /**
-     * Constructor
-     */
+    protected $table = NULL;
+
     public function __construct()
     {
         // Perform setup on traits used.
@@ -33,15 +32,25 @@ class BaseModel {
 
     }
 
-    /**
-     * Gets one of the model attributes.
-     * @param string $name The name of the attribute.
-     * @return mixed
-     */
+    public function table()
+    {
+        if (is_null($this->table))
+        {
+            $table = preg_replace('/(.*\\\\)(?=[^\\\\]*\\z)/', '', get_called_class());
+            return strtolower($table) . 's';
+        }
+        return $this->table;
+    }
+
     public function getAttribute($name)
     {
         $this->hasAttributeOrFail($name);
         return $this->attributes[$name];
+    }
+
+    public function getAttributes()
+    {
+        return $this->attributes;
     }
 
     /**
@@ -96,6 +105,7 @@ class BaseModel {
      *                          be set. Keys should be set to the attribute names
      *                          and the values should be the new values of the
      *                          attributes.
+     * @return $this
      */
     public function fill(Array $attributes)
     {
@@ -103,21 +113,22 @@ class BaseModel {
         {
             $this->setAttribute($name, $value);
         }
+        return $this;
     }
 
     /**
      * Sets the value of an attribute.
-     * @param string $name The attribute name.
+     * @param string $attribute The attribute name.
      * @param mixed $value The new attribute value.
      */
-    public function setAttribute($name, $value)
+    public function setAttribute($attribute, $value)
     {
-        $this->hasAttributeOrFail($name);
-        if ($this->isCastable($name))
+        $this->hasAttributeOrFail($attribute);
+        if ($this->isCastable($attribute))
         {
-            $value = $this->cast($name, $value);
+            $value = $this->cast($attribute, $value);
         }
-        $this->attributes[$name] = $value;
+        $this->attributes[$attribute] = $value;
     }
 
     /**

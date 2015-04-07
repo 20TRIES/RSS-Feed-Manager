@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App\Contracts\ViewComposerContract AS ViewComposer;
-use App\ViewComposers\TwigViewComposer;
+use App\Helpers\ViewComposers\TwigViewComposer;
 
 /**
  * Constructor class that outlines the base functionality that every

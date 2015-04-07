@@ -1,4 +1,4 @@
-<?php namespace App\ViewComposers;
+<?php namespace App\Helpers\ViewComposers;
 
 use App\Contracts\ViewComposerContract;
 

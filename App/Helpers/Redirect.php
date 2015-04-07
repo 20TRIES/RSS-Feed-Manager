@@ -15,7 +15,7 @@ class Redirect {
      */
     public static function to($uri, $statusCode = 303)
     {
-        header('Location: ' . $_SERVER['HTTP_HOST'] . $uri, true, $statusCode);
+        header('Location: http://' . $_SERVER['HTTP_HOST'] . $uri, true, $statusCode);
         die();
     }
 }

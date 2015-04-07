@@ -20,7 +20,7 @@ trait FeedRepositoryTrait {
     /**
      * Finds a Feed.
      * @param $id
-     * @return Feed
+     * @return Feed[]
      */
     public function find($id)
     {
@@ -41,9 +41,22 @@ trait FeedRepositoryTrait {
      * @param array $attributes
      * @return Feed
      */
-    public function create(Array $attributes)
+    public static function create(Array $attributes)
     {
-        return $this->getRepository('feeds')->create($attributes);
+        $feed = (new Feed)->fill($attributes);
+        return $feed->save() ? $feed : FALSE;
+    }
+
+    public function save()
+    {
+        return $this->exists()
+            ? $this->getRepository('feeds')->update()
+            : $this->getRepository('feeds')->insert();
+    }
+
+    public function exists()
+    {
+        return $this->getRepository('feeds')->exists();
     }
 
     /**
