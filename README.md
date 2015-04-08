@@ -1,7 +1,7 @@
 # RSS-Feed-Manager
 Simple web application for managing rss feeds.
 
-##Instal
+##Install
 
 You will need to run composer update within the project file (assuming that you have composer installed) in order to fecth any dependancies that the project has.
 
