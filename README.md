@@ -13,7 +13,7 @@ To begin you will need to adjust the database configuration file in "/config/db.
 
 There is also a couple of basic setup scripts for the database in the /database directory. You will simply need to copy and past the sql code into your database command line to build and populate the database. There is sufficient data in the database to see working examples of rss feeds, atom feeds and invalid feeds.
 
-TODO
+##TODO
 
 Unfortunately due to time constraints, not all features have been implemented and hence the list below would need implementing in order to fully complete the project. The current state of the application is after 4 days of work.
 
