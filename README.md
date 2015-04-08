@@ -21,3 +21,7 @@ Unfortunately due to time constraints, not all features have been implemented an
 2. User accounts that would allow mucltiple users to access their own list of feeds and independently maintain the list.
 3. CSS formatting.
 4. Form validation and subsequent feedback.
+
+##Credits
+Credit to the MagpieRSS package that could not be pulled in via composer and as such may not be as easily noticed. The package was very useful. See the follwoing site for more details about it: http://magpierss.sourceforge.net
+For all other packages used, please see composer.json.
