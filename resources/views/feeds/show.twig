@@ -5,15 +5,25 @@
 </head>
 <body>
 <h1>{{ title }}</h1>
-<table>
-    <tr> <th>Title</th> <th>Desc</th> <th>Created</th> </tr>
-    {% for item in items %}
-        <tr>
-            <td> <a href="{{ item.getAttribute('address') }}">{{ item.getAttribute('title') }}</a> </td>
-            <td style="max-width: 400px"> {{ item.getAttribute('desc') }} </td>
-            <td> {{ item.getAttribute('created_at').diffForHumans() }} </td>
-        </tr>
-    {% endfor %}
-</table>
+
+{% if error is defined %}
+
+    <p>{{ error }}</p>
+
+{% else %}
+
+    <table>
+        <tr> <th>Title</th> <th>Desc</th> <th>Created</th> </tr>
+        {% for item in items %}
+            <tr>
+                <td> <a href="{{ item['address'] }}">{{ item['title'] }}</a> </td>
+                <td style="max-width: 400px"> {{ item['description'] }} </td>
+                <td> {{ item['date'].diffForHumans() }} </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endif %}
+
 </body>
 </html>

@@ -48,7 +48,6 @@ class FeedController extends BaseController {
         $feed       = array_pop( (new Feed())->find($feed_id) );
         $attributes = ['title' => $feed->getAttribute('name')];
         $feed_items = $this->rss_reader->fetch($feed->getAttribute('address'));
-
         $attributes += ($feed_items === FALSE)
             ? ['error' => preg_replace('/MagpieRSS:/', '', error_get_last()['message'])]
             : ['items' => $feed_items];
