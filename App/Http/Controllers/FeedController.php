@@ -74,8 +74,8 @@ class FeedController extends BaseController {
     public function store()
     {
         $feed = (new Feed)->fill([
-            'name'    => $_POST['name'],
-            'address' => $_POST['address']
+            'name'    => strip_tags($_POST['name']),
+            'address' => strip_tags($_POST['address'])
         ]);
         $feed->save();
         return Redirect::to('/show/' . $feed->getAttribute('id'));
