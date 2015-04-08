@@ -3,7 +3,7 @@ Simple web application for managing rss feeds.
 
 ##Install
 
-You will need to run composer update within the project file (assuming that you have composer installed) in order to fecth any dependancies that the project has.
+You will need to run composer update within the project file (assuming that you have composer installed) in order to fetch any dependancies that the project has.
 
 "composer instal"
 
