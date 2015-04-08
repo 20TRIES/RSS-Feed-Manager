@@ -1,0 +1,10 @@
+INSERT INTO feeds VALUES (NULL, 'PHP.net', 'http://www.php.net/news.rss', DEFAULT, DEFAULT);
+INSERT INTO feeds VALUES (NULL, 'SlashDot', 'http://slashdot.org/rss/slashdot.rss', DEFAULT, DEFAULT);
+INSERT INTO feeds VALUES (NULL, 'BBC News', 'http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/front_page/rss.xml', DEFAULT, DEFAULT);
+INSERT INTO feeds VALUES (NULL, 'DMU Bananas', 'www.dmu-bananas.co.uk', DEFAULT, DEFAULT);
+INSERT INTO feeds VALUES (NULL, 'Sky News', 'http://feeds.skynews.com/feeds/rss/home.xml', DEFAULT, DEFAULT);
+INSERT INTO feeds VALUES (NULL, 'iTunes Top 10 Songs', 'http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=10/xml', DEFAULT, DEFAULT);
+INSERT INTO feeds VALUES (NULL, 'All Highways England', 'http://hatrafficinfo.dft.gov.uk/feeds/rss/UnplannedEvents.xml', DEFAULT, DEFAULT);
+INSERT INTO feeds VALUES (NULL, 'CNN Top Stories', 'http://rss.cnn.com/rss/cnn_topstories.rss', DEFAULT, DEFAULT);
+INSERT INTO feeds VALUES (NULL, 'The Channel Headlines', 'http://www.channelregister.co.uk/headlines.atom', DEFAULT, DEFAULT);
+INSERT INTO feeds VALUES (NULL, 'Tech Crunch', 'http://feeds.feedburner.com/techcrunch', DEFAULT, DEFAULT);

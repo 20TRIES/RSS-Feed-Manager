@@ -2,6 +2,6 @@
 
 .idea/*
 
-/storage/*
+/storage/**
 
 /public/cache/*

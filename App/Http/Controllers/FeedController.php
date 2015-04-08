@@ -70,6 +70,7 @@ class FeedController extends BaseController {
 
     /**
      * Handles a request to store a new RSS Feed.
+     * @TODO Needs validation of name and addresses.
      */
     public function store()
     {
