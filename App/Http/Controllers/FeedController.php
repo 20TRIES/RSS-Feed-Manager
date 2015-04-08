@@ -1,7 +1,9 @@
 <?php namespace App\Http\Controllers;
 
+use app\Contracts\RssReaderContract AS RssReader;
+use App\Contracts\ViewComposerContract as ViewComposer;
 use App\Helpers\Redirect;
-use App\Helpers\RssReader;
+use App\Helpers\RSSReaders\MagpieRssReader;
 use App\Models\Feeds\Feed;
 
 /**
@@ -11,6 +13,17 @@ use App\Models\Feeds\Feed;
  * @since 03.04.15
 */
 class FeedController extends BaseController {
+
+    /**
+     * @var RssReader
+     */
+    protected $rss_reader;
+
+    public function __construct(ViewComposer $composer = NULL, RssReader $rss_reader = NULL)
+    {
+        parent::__construct($composer);
+        $this->rss_reader = is_null($rss_reader) ? new MagpieRssReader() : $rss_reader;
+    }
 
     /**
      * Handles requests to the index page.
@@ -32,11 +45,15 @@ class FeedController extends BaseController {
      */
     public function show($feed_id)
     {
-        $feed = array_pop( (new Feed())->find($feed_id) );
-        return $this->view_composer->make('feeds/show.twig', [
-            'title'   => $feed->getAttribute('name'),
-            'items'   => RssReader::fetch($feed)
-        ]);
+        $feed       = array_pop( (new Feed())->find($feed_id) );
+        $attributes = ['title' => $feed->getAttribute('name')];
+        $feed_items = $this->rss_reader->fetch($feed->getAttribute('address'));
+
+        $attributes += ($feed_items === FALSE)
+            ? ['error' => preg_replace('/MagpieRSS:/', '', error_get_last()['message'])]
+            : ['items' => $feed_items];
+
+        return $this->view_composer->make('feeds/show.twig', $attributes);
     }
 
     /**

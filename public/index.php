@@ -8,8 +8,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 // unexpected errors and exceptions.
 
 ini_set('display_errors', 'off');
-
-set_error_handler("error_handler", E_ALL);
+set_error_handler("error_handler", E_ERROR);
 set_exception_handler("error_handler");
 function error_handler($errno, $errstr)
 {
