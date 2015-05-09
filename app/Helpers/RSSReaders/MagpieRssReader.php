@@ -1,6 +1,6 @@
 <?php namespace App\Helpers\RSSReaders;
 
-require_once('/Users/marcust/Documents/htdocs/rss-feed-manager/App/Helpers/RSSReaders/MagpieRss/rss_fetch.inc');
+require_once(__DIR__ . '/MagpieRss/rss_fetch.inc');
 
 use App\Contracts\RssReaderContract;
 use Carbon\Carbon;
